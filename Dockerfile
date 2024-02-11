@@ -1,0 +1,29 @@
+FROM node:18-alpine
+
+# Set the default values for the build arguments
+ARG API_VERSION=v1
+ARG PROTOCOL=http
+ARG DOMAIN=localhost
+ARG PORT=3333
+ARG AVAILABLE_BUCKETS=verifiable-credentials,private-verifiable-credentials,epcis-events
+
+# Set the environment variables
+ENV API_VERSION=${API_VERSION}
+ENV PROTOCOL=${PROTOCOL}
+ENV DOMAIN=${DOMAIN}
+ENV PORT=${PORT}
+ENV AVAILABLE_BUCKETS=${AVAILABLE_BUCKETS}
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN yarn install
+
+COPY . .
+
+RUN yarn build
+
+EXPOSE ${PORT}
+
+CMD [ "yarn", "start" ]
