@@ -36,23 +36,22 @@ jobs:
                   --allow-unauthenticated \
                   --set-env-vars "^##^API_VERSION=${{ vars.API_VERSION }}##PROTOCOL=${{ vars.PROTOCOL }}##DOMAIN=${{ vars.DOMAIN }}##AVAILABLE_BUCKETS=${{ vars.AVAILABLE_BUCKETS }}"
 
-            # Uncomment the following block once domain is in GCP
-            # - name: Map Custom Domain for Apps
-            #   run: |
-            #       set +e # Disable immediate exit on error
-            #       CREATE_OUTPUT=$(gcloud -q beta run integrations create --type=custom-domains --region=${{ vars.REGION }} --parameters='set-mapping=${{ vars.DOMAIN }}:${{ vars.IMAGE_NAME }}' 2>&1)
-            #       CREATE_STATUS=$?
-            #       set -e # Re-enable immediate exit on error
+            - name: Map Custom Domain for Apps
+              run: |
+                  set +e # Disable immediate exit on error
+                  CREATE_OUTPUT=$(gcloud -q beta run integrations create --type=custom-domains --region=${{ vars.REGION }} --parameters='set-mapping=${{ vars.DOMAIN }}:${{ vars.IMAGE_NAME }}' 2>&1)
+                  CREATE_STATUS=$?
+                  set -e # Re-enable immediate exit on error
 
-            #       if [ $CREATE_STATUS -ne 0 ]; then
-            #         echo "Attempt to create domain mapping failed: $CREATE_OUTPUT"
-            #         if echo "$CREATE_OUTPUT" | grep -q "Integration with name \[custom-domains\] already exists"; then
-            #           echo "Domain already exists, attempting to update..."
-            #           gcloud -q beta run integrations update custom-domains --region=${{ vars.REGION }} --parameters='set-mapping=${{ vars.DOMAIN }}:${{ vars.IMAGE_NAME }}'
-            #         else
-            #           echo "Failed due to an unexpected reason. Exiting with status code $CREATE_STATUS"
-            #           exit $CREATE_STATUS
-            #         fi
-            #       else
-            #         echo "Domain mapping created successfully."
-            #       fi
+                  if [ $CREATE_STATUS -ne 0 ]; then
+                    echo "Attempt to create domain mapping failed: $CREATE_OUTPUT"
+                    if echo "$CREATE_OUTPUT" | grep -q "Integration with name \[custom-domains\] already exists"; then
+                      echo "Domain already exists, attempting to update..."
+                      gcloud -q beta run integrations update custom-domains --region=${{ vars.REGION }} --parameters='set-mapping=${{ vars.DOMAIN }}:${{ vars.IMAGE_NAME }}'
+                    else
+                      echo "Failed due to an unexpected reason. Exiting with status code $CREATE_STATUS"
+                      exit $CREATE_STATUS
+                    fi
+                  else
+                    echo "Domain mapping created successfully."
+                  fi
