@@ -1,4 +1,13 @@
-# Storage Service
+# project-digitallink
+Reference implementation of UNTP link resolver and credential store
+
+* Will implement [ISO-18975](https://www.iso.org/standard/85540.html)
+* Will support any identifier type
+* Will add credential store capabilites to host DPPs etc.
+
+Development work is expected to start in July 2024.
+
+## Storage Service
 
 This repository contains an Express REST API that provides an endpoint to encrypt and store Verifiable Credentials.
 
@@ -12,16 +21,16 @@ The credentials endpoint provides the following functionality:
     -   A decryption key, essential for decrypting the encrypted document.
     -   The URI of the stored encrypted document.
 
-## Prerequisites
+### Prerequisites
 
 -   [npm](https://www.npmjs.com/) (>= 9.8.1)
 -   [yarn](https://yarnpkg.com/) (>= 1.22.21)
 
-## Environment variables
+### Environment variables
 
 An example env file `.env.example` can be found in the root directory. Duplicate and rename the file to `.env` and modify the variables as required.
 
-## Usage
+### Usage
 
 ```bash
 # Install dependencies
@@ -52,9 +61,9 @@ docker run -d --env-file .env -p 3333:3333 \
 storage-service:latest
 ```
 
-## Example
+### Example
 
-### Store Credential
+#### Store Credential
 
 ```bash
 # Request
