@@ -1,4 +1,6 @@
 export * from './gcp';
+export * from './local';
+export * from './service';
 
 export interface IStorageService {
     /**

@@ -8,6 +8,14 @@
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         "strict": true,
-        "types": ["jest", "node"]
-    }
+        "types": [
+            "jest",
+            "node"
+        ]
+    },
+    "exclude": [
+        "node_modules",
+        "__mocks__",
+        "dist"
+    ],
 }

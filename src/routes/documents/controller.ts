@@ -1,7 +1,8 @@
 import { RequestHandler } from 'express';
 import { AVAILABLE_BUCKETS } from '../../config';
-import { GCPStorageService } from '../../services/storage/gcp';
 import { DocumentsService } from './service';
+import { IStorageService } from '../../services';
+import { initalizeStorageService } from '../../services/storage/service';
 
 /**
  * Handles the request to a store document.
@@ -15,7 +16,7 @@ export const storeDocument: RequestHandler = async (req, res) => {
         const params = req.body;
 
         const documentsService = new DocumentsService();
-        const storageService = new GCPStorageService();
+        const storageService: IStorageService = initalizeStorageService();
 
         const response = await documentsService.storeDocument(storageService, params);
 

@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import { AVAILABLE_BUCKETS } from '../../config';
-import { CryptographyService, GCPStorageService } from '../../services';
+import { CryptographyService, IStorageService, initalizeStorageService } from '../../services';
 import { CredentialsService } from './service';
 
 /**
@@ -15,7 +15,7 @@ export const storeCredential: RequestHandler = async (req, res) => {
         const params = req.body;
 
         const credentialsService = new CredentialsService();
-        const storageService = new GCPStorageService();
+        const storageService: IStorageService = initalizeStorageService();
         const cryptographyService = new CryptographyService();
 
         const response = await credentialsService.encryptAndStoreCredential(

@@ -6,6 +6,7 @@ const { res: mockRes, next: mockNext, clearMockRes } = getMockRes();
 
 jest.mock('../../config', () => ({
     AVAILABLE_BUCKETS: ['bucketName'],
+    STORAGE_TYPE: 'gcp',
 }));
 
 jest.mock('../../services/storage/gcp', () => ({
