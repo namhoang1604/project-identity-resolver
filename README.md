@@ -59,11 +59,17 @@ yarn test
 Configure the storage service using the following environment variables:
 
 -   `STORAGE_TYPE`:
-    The type of storage to use (`local` or `gcp`).
+    The type of storage to use (`local` or `gcp` or `aws`).
 -   `LOCAL_DIRECTORY`:
     The directory for local storage (default: `uploads` in the current directory).
 -   `GOOGLE_APPLICATION_CREDENTIALS`:
     The path to the GCP service account file (if using GCP).
+-   `REGION`:
+    The AWS region to use (if using AWS).
+-   `AWS_ACCESS_KEY_ID`:
+    The AWS access key to use (if using AWS).
+-   `AWS_SECRET_ACCESS_KEY`:
+    The AWS secret access key to use (if using AWS).
 
 ## Storage Types
 
@@ -96,6 +102,30 @@ export STORAGE_TYPE=gcp
 
 # Set the path to the GCP service account file
 export GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account-file.json
+
+# Build the app
+yarn build
+
+# Run the app
+yarn start
+```
+
+### Amazon Web Services (AWS)
+
+For the production environment, we recommend using IAM roles to enhance security and eliminate the need to hardcode AWS credentials.
+To more details about using IAM roles, please refer to the [AWS documentation](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html).
+Use Amazon Web Services to store files in an S3 bucket.
+
+Example:
+
+```bash
+# Set the storage type to aws
+export STORAGE_TYPE=aws
+
+# Set the AWS region
+export REGION=ap-southeast-2
+export AWS_ACCESS_KEY_ID=AWS_ACCESS_KEY_ID # Local development only
+export AWS_SECRET_ACCESS_KEY=AWS_SECRET_ACCESS_KEY # Local development only
 
 # Build the app
 yarn build
@@ -183,5 +213,13 @@ storage-service:latest
 docker run -d --env-file .env -p 3333:3333 \
 -e STORAGE_TYPE=gcp \
 -v path/to/local/gcp/service-account-file.json:/tmp/service-account-file.json \
+storage-service:latest
+
+# Start the container using Amazon Web Services (AWS)
+docker run -d --env-file .env -p 3333:3333 \
+-e STORAGE_TYPE=aws \
+-e REGION=ap-southeast-2 \
+-e AWS_ACCESS_KEY_ID=YOUR_AWS_ACCESS_KEY_ID \
+-e AWS_SECRET_ACCESS_KEY=YOUR_AWS_SECRET \
 storage-service:latest
 ```
