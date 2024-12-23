@@ -223,3 +223,44 @@ docker run -d --env-file .env -p 3333:3333 \
 -e AWS_SECRET_ACCESS_KEY=YOUR_AWS_SECRET \
 storage-service:latest
 ```
+
+## Documentation
+
+The project uses Docusaurus for documentation management. Documentation versions are managed through a release script and automated pipeline.
+
+### Release Script
+
+The `scripts/release-doc.js` script automates the process of creating new documentation versions:
+
+- Reads the documentation version from `version.json`
+- Creates Docusaurus version using `docVersion` value from `version.json` file
+
+To manually create a new documentation version:
+
+```bash
+# Run the release script
+yarn release:doc
+```
+
+### Documentation Pipeline
+
+The documentation is automatically built and deployed using GitHub Actions through the `build_publish_docs.yml` pipeline. This pipeline:
+
+1. Triggers on:
+
+- Manual workflow dispatch
+- (TODO) Push to main branch once enabled
+
+2. Performs the following steps:
+
+- Checks out the repository
+- Sets up Node.js 18 with Yarn cache
+- Installs documentation dependencies
+- Builds the static documentation site
+- Deploys to GitHub Pages using gh-pages branch
+
+The pipeline uses environment variables for configuration:
+- `DOCS_BASE_URL`: Base URL for documentation hosting
+- `DOCS_URL`: Documentation site URL
+
+The built documentation is published to the `gh-pages` branch using the GitHub Actions bot.
