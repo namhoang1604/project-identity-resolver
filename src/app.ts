@@ -3,11 +3,28 @@ dotenv.config();
 
 import cors from 'cors';
 import express from 'express';
+import swaggerUi from 'swagger-ui-express';
 import bodyParser from 'body-parser';
-import { API_VERSION } from './config';
 import { router } from './routes';
+import swaggerDocument from './swagger/swagger.json';
+import { updateSwagger } from './swagger/helpers';
+import { API_VERSION } from './config';
 
 export const app = express();
+
+let swaggerJson: any = { ...swaggerDocument };
+
+app.use(
+    '/api-docs',
+    (req: any, res: any, next: any) => {
+        const url = `${req.protocol}://${req.hostname}:${req.socket.localPort}/api/${API_VERSION}`;
+        swaggerJson = updateSwagger(swaggerJson, { version: API_VERSION, url });
+        req.swaggerDoc = swaggerJson;
+        next();
+    },
+    swaggerUi.serveFiles(swaggerJson, {}) as any,
+    swaggerUi.setup() as any,
+);
 
 app.use(cors());
 
@@ -20,4 +37,4 @@ app.get('/health-check', (req, res) => {
     res.send('OK');
 });
 
-app.use(`/${API_VERSION}`, router);
+app.use(`/api/${API_VERSION}`, router);

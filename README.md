@@ -89,6 +89,8 @@ export STORAGE_TYPE=local
 yarn dev
 ```
 
+The Swagger UI is available at `http://localhost:3333/api-docs`.
+
 ### Google Cloud Storage
 
 For production environments,
@@ -147,7 +149,7 @@ The cryptography service uses the following algorithms:
 
 ### Store Credential
 
--   **URL**: `/v1/credentials`
+-   **URL**: `/api/1.0.0/credentials`
 -   **Method**: `POST`
 -   **Request Body**:
 
@@ -166,7 +168,7 @@ The cryptography service uses the following algorithms:
 
     ```json
     {
-        "uri": "http://localhost:3333/v1/verifiable-credentials/123e4567-e89b-12d3-a456-426614174000.json",
+        "uri": "http://localhost:3333/api/1.0.0/verifiable-credentials/123e4567-e89b-12d3-a456-426614174000.json",
         "hash": "computed-hash",
         "key": "encryption-key"
     }
@@ -174,7 +176,7 @@ The cryptography service uses the following algorithms:
 
 ### Store Document
 
--   **URL**: `/v1/documents`
+-   **URL**: `/api/1.0.0/documents`
 -   **Method**: `POST`
 -   **Request Body**:
 
@@ -192,7 +194,7 @@ The cryptography service uses the following algorithms:
 
     ```json
     {
-        "uri": "http://localhost:3333/v1/verifiable-credentials/123e4567-e89b-12d3-a456-426614174000.json",
+        "uri": "http://localhost:3333/api/1.0.0/verifiable-credentials/123e4567-e89b-12d3-a456-426614174000.json",
         "hash": "computed-hash"
     }
     ```
@@ -232,8 +234,8 @@ The project uses Docusaurus for documentation management. Documentation versions
 
 The `scripts/release-doc.js` script automates the process of creating new documentation versions:
 
-- Reads the documentation version from `version.json`
-- Creates Docusaurus version using `docVersion` value from `version.json` file
+-   Reads the documentation version from `version.json`
+-   Creates Docusaurus version using `docVersion` value from `version.json` file
 
 To manually create a new documentation version:
 
@@ -248,19 +250,20 @@ The documentation is automatically built and deployed using GitHub Actions throu
 
 1. Triggers on:
 
-- Manual workflow dispatch
-- (TODO) Push to main branch once enabled
+-   Manual workflow dispatch
+-   (TODO) Push to main branch once enabled
 
 2. Performs the following steps:
 
-- Checks out the repository
-- Sets up Node.js 18 with Yarn cache
-- Installs documentation dependencies
-- Builds the static documentation site
-- Deploys to GitHub Pages using gh-pages branch
+-   Checks out the repository
+-   Sets up Node.js 18 with Yarn cache
+-   Installs documentation dependencies
+-   Builds the static documentation site
+-   Deploys to GitHub Pages using gh-pages branch
 
 The pipeline uses environment variables for configuration:
-- `DOCS_BASE_URL`: Base URL for documentation hosting
-- `DOCS_URL`: Documentation site URL
+
+-   `DOCS_BASE_URL`: Base URL for documentation hosting
+-   `DOCS_URL`: Documentation site URL
 
 The built documentation is published to the `gh-pages` branch using the GitHub Actions bot.
