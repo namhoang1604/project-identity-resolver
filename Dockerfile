@@ -16,7 +16,7 @@ ENV STORAGE_TYPE=${STORAGE_TYPE}
 
 WORKDIR /app
 
-COPY yarn.lock ./
+COPY package.json yarn.lock ./
 
 RUN yarn install --frozen-lockfile
 
