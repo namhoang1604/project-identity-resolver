@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.1](https://github.com/uncefact/project-identity-resolver/compare/1.0.0...v1.0.1) (2025-01-03)
+
+
+### Miscellaneous
+
+* Release 1.0.1 ([534a8c9](https://github.com/uncefact/project-identity-resolver/commit/534a8c90c38daea49ee26da65c11ec57e5797e9a))
+* Update script ([389f598](https://github.com/uncefact/project-identity-resolver/commit/389f59855b8047adfccec61155e7621199974678))
+* Update version for hotfix ([20f6272](https://github.com/uncefact/project-identity-resolver/commit/20f62722e9635336731057e079e11f4cd12cc400))
+
 ## [1.0.0](https://github.com/uncefact/project-identity-resolver/compare/v1.0.0...v1.0.0) (2025-01-03)
 
 
